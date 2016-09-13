@@ -1,0 +1,62 @@
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.control-label {
+  padding-right: 15px;
+}
+
+.app-full-height, #react-root {
+  height: 100%;
+}
+
+.sidebar {
+  padding: 10px 10px;
+  background-color: #f8f8f8;
+}
+
+.page {
+  padding: 20px 20px;
+}
+
+.queue-panel-nav {
+  margin-bottom: 0;
+
+  .navbar-btn {
+    margin-left: 5px;
+  }
+
+  .btn-group {
+    margin-left: 40px;
+  }
+}
+
+.no-task {
+  margin-top: 100px;
+}
+
+td {
+  h5, div, a {
+    margin: 0;
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .progress {
+    margin: 0;
+  }
+}
+
+.brand {
+  margin-bottom: 10px;
+}
