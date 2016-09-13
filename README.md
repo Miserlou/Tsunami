@@ -42,6 +42,7 @@ License
 Tsunami is based on nuTorrent by @LeeChSien.
 
 MIT © [Miserlou](https://github.com/Miserlou)
+
 MIT © [LeeChSien](https://github.com/LeeChSien)
 
 Powered by torrent-stream, Electron and React.
