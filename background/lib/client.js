@@ -12,7 +12,9 @@ var PROGRESS_CHECKER_INTERVAL = 1000;
 
 var Client = function() {
   // Private
-  this._setting = {};
+  this._setting = {
+    dht: false
+  };
   this._engine = null;
   this._progressIntervalChecker = null;
   this._lastSwarm = null;
@@ -42,6 +44,7 @@ Client.prototype = {
     this._setting = attributes.setting;
 
     clonedSetting = JSON.parse(JSON.stringify(this._setting));
+    clonedSetting['dht'] = false;
 
     self._engine = TorrentStream(this.magnet, clonedSetting);
     self._engine.on('ready', function() {
@@ -73,6 +76,7 @@ Client.prototype = {
     }
 
     clonedSetting = JSON.parse(JSON.stringify(this._setting));
+    clonedSetting['dht'] = false;
 
     self._engine = TorrentStream(this.magnet, clonedSetting);
     self._engine.on('ready', function() {
