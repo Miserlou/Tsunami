@@ -19,8 +19,8 @@ var storageBuffer = require('./lib/storage-buffer');
 var fileStream = require('./lib/file-stream');
 var piece = require('./lib/piece');
 
-var MAX_REQUESTS = 5;
-var CHOKE_TIMEOUT = 5000;
+var MAX_REQUESTS = 1;
+var CHOKE_TIMEOUT = 10000;
 var REQUEST_TIMEOUT = 30000;
 var SPEED_THRESHOLD = 3 * piece.BLOCK_SIZE;
 var DEFAULT_PORT = 6881;

@@ -7,14 +7,9 @@ var peerWireProtocol = require('peer-wire-protocol');
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 
-var Proxy = require('proxy.stream').Proxy;
-var Connector = require('proxy.stream').Connector;
-
-var Socks = require('socks');
-
 var HANDSHAKE_TIMEOUT = 25000;
-var CONNECTION_TIMEOUT = 15000;
-var RECONNECT_WAIT = [1000, 5000, 15000, 30000000];
+var CONNECTION_TIMEOUT = 3000;
+var RECONNECT_WAIT = [1000, 5000, 15000];
 var DEFAULT_SIZE = 100;
 
 var toBuffer = function(str, encoding) {
@@ -58,15 +53,11 @@ var onwire = function(swarm, connection, onhandshake, isServer) {
     });
 
     connection.on('close', function() {
-    	// console.log(connection);
-    	console.log(connection.bytesRead);
-    	console.log(connection._bytesDispatched);
         clearTimeout(connectTimeout);
         clearTimeout(handshakeTimeout);
         wire.destroy();
     });
 
-    // console.log(connection);
     connection.pipe(wire).pipe(connection);
     return wire;
 };
@@ -279,124 +270,42 @@ Swarm.prototype._drain = function() {
     var parts = addr.split(':');
     var connection;
 
-	var cb = function(connection) {
-	    if (peer.timeout) clearTimeout(peer.timeout);
-
-	    peer.node = null;
-	    peer.timeout = null;
-
-	    var wire = onwire(self, connection, function(infoHash) {
-	        if (infoHash.toString('hex') !== self.infoHash.toString('hex')) return console.log("death"); connection.destroy();
-	        peer.reconnect = true;
-	        peer.retries = 0;
-	        self._onwire(connection, wire);
-	    });
-
-	    wire.on('end', function() {
-	        peer.wire = null;
-	        if (!peer.reconnect || self._destroyed || peer.retries >= RECONNECT_WAIT.length) return self._remove(addr);
-	        peer.timeout = setTimeout(repush, RECONNECT_WAIT[peer.retries++]);
-	    });
-
-	    peer.wire = wire;
-	    self._onconnection(connection);
-
-	    wire.peerAddress = addr;
-	    wire.handshake(self.infoHash, self.peerId, self.handshake);
-	};
-
     if(this.utp && !peer.noUtp) {
-    	peer.noUtp;
-    	repush();
-        // connection = utp.connect(parts[1], parts[0]);
-        // connection.on('timeout', function() {
-        //     // Unable to connect to peer with uTP
-        //     // Assume it doesn't support it.
-        //     peer.noUtp = true;
-        //     repush();
-        // });
+        connection = utp.connect(parts[1], parts[0]);
+        connection.on('timeout', function() {
+            // Unable to connect to peer with uTP
+            // Assume it doesn't support it.
+            peer.noUtp = true;
+            repush();
+        });
     } else {
-    	console.log("CONNECTINGGG");
-        // connection = net.connect(parts[1], parts[0], function(){
-        // 	console.log("hello");
-        // });
-
-		var options = {
-		    proxy: {
-		        ipaddress: "127.0.0.1", // Random public proxy
-		        port: 9050,
-		        type: 5 // type is REQUIRED. Valid types: [4, 5]  (note 4 also works for 4a)
-		    },
-		    target: {
-		        host: parts[0], // can be an ip address or domain (4a and 5 only)
-		        port: parts[1]
-		    },
-		    command: 'bind'  // This defaults to connect, so it's optional if you're not using BIND or Associate.
-		};
-
-		Socks.createConnection(options, function(err, socket, info) {
-		    if (err)
-		        console.log(err);
-		    else {
-
-		    	// console.log("got dat socket");
-		    	// console.log(socket);
-
-		    	socket.allowHalfOpen = true;
-
-		        // PLEASE NOTE: sockets need to be resumed before any data will come in or out as they are paused right before this callback is fired.
-		        socket.resume();
-
-		        cb(socket);
-
-		        // 569
-		        // <Buffer 48 54 54 50 2f 31 2e 31 20 33 30 31 20 4d 6f 76 65 64 20 50 65...
-		    }
-		});
-
-		//connection = new net.Socket();
-
-       	// connection = net.connect(parts[1], parts[0], function(s){
-        //    console.log("hello");
-        //    s.pipe(new Proxy({ type: 'socks5', host: 'localhost', port: 9050 })).pipe(s);
-        // });
-
-		// var proxy = new Proxy({ type: 'socks5', host: 'localhost', port: 9050 }
-
-		// var endpoint = {};
-		// endpoint.host = parts[0];
-		// endpoint.port = parts[1];
-		// var proxy = {};
-		// proxy.host = '127.0.0.1';
-		// proxy.port = 9050;
-
-
-		// console.log(endpoint);
-		// console.log(proxy);
-
-		// var socket = new net.Socket();
-		// var connector = new Connector(socket);
-
-		// console.log("connector");
-		// console.log(connector);
-
-		// connector.proxy = proxy;
-		// connector.endpoint = endpoint;
-		// connection = connector.connectSocks5();
-
-		// console.log("connection");
-		// console.log(connection);
-
-        //var Proxy = require('proxy.stream').Proxy;
-
-		// connection = socks5.createConnection('localhost', 9050).connect(parts[0], parts[1]);
-		// // stream.on('data', function (buf) {
-		// //     console.log(buf.toString());
-		// // });
-
+        connection = net.connect(parts[1], parts[0]);
     }
 
- };
+    if (peer.timeout) clearTimeout(peer.timeout);
+
+    peer.node = null;
+    peer.timeout = null;
+
+    var wire = onwire(this, connection, function(infoHash) {
+        if (infoHash.toString('hex') !== self.infoHash.toString('hex')) return connection.destroy();
+        peer.reconnect = true;
+        peer.retries = 0;
+        self._onwire(connection, wire);
+    });
+
+    wire.on('end', function() {
+        peer.wire = null;
+        if (!peer.reconnect || self._destroyed || peer.retries >= RECONNECT_WAIT.length) return self._remove(addr);
+        peer.timeout = setTimeout(repush, RECONNECT_WAIT[peer.retries++]);
+    });
+
+    peer.wire = wire;
+    self._onconnection(connection);
+
+    wire.peerAddress = addr;
+    wire.handshake(this.infoHash, this.peerId, this.handshake);
+};
 
 Swarm.prototype._shift = function() {
     for (var i = this._queues.length-1; i >= 0; i--) {

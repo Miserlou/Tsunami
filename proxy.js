@@ -3,11 +3,12 @@ var socks = require('socksv5');
 var port = 9050;
 var srv = socks.createServer(function(info, accept, deny) {
   accept();
-  //var debug = accept(true);
-  // debug.on('data', function(data){
-  //   console.log(data);
-  //   return data;
-  //  });
+  console.log("accepted."); 
+  var debug = accept(true);
+  debug.on('data', function(data){
+     console.log(data);
+     return data;
+  });
 
 });
 srv.listen(port, 'localhost', function() {
