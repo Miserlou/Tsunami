@@ -21,6 +21,8 @@ Usage
 ------------
 * Don't use this yet.
 
+**Note that this is currently just a working directory for my experiments! Don't expect anything in this repo to survive!**
+
 Build
 ------------
 Install dependencies:
