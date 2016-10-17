@@ -45,7 +45,8 @@ var Manager = function() {
           verify: true,
           path: path ? path : null,
           tmp: App.getPath('userCache'),
-          connections: 30
+          //connections: 30
+          connections: 1 
         },
         client = new Client();
 
