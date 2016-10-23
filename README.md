@@ -1,3 +1,5 @@
+<img src="http://i.imgur.com/BJMKyJL.png" width="400px">
+
 Tsunami
 ==============
 
