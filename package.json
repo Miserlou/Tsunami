@@ -1,7 +1,7 @@
 {
-  "name": "nuTorrent",
-  "version": "0.6.0",
-  "description": "Pure Javascript BitTorrent Client",
+  "name": "Tsunami",
+  "version": "0.0.1",
+  "description": "Anonymous BitTorrent Client",
   "main": "background/main.js",
   "scripts": {
     "test": "mocha",
@@ -17,12 +17,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/LeeChSien/nuTorrent"
+    "url": "https://github.com/Miserlou/Tsunami"
   },
   "author": {
-    "name": "Jason Lee",
-    "email": "chsienlee@gmail.com",
-    "url": "https://github.com/LeeChSien"
+    "name": "Rich Jones",
+    "email": "miserlou@gmail.com",
+    "url": "https://github.com/Miserlou"
   },
   "devDependencies": {
     "asar": "^0.6.1",
