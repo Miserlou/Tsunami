@@ -1,6 +1,6 @@
 <img src="http://i.imgur.com/BJMKyJL.png" width="400px">
 
-Tsunami
+Tsunami 🌊
 ==============
 
 **Tsunami** is an experimental BitTorrent client with magical anonymity powers.
