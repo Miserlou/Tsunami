@@ -1,0 +1,15 @@
+SafeLogging 0
+Log info stdout
+SocksPort 9050
+SocksPort 9051
+SocksPort 9052
+SocksPort 9053
+SocksPort 9054
+SocksPort 9055
+SocksPort 9056
+SocksPort 9057
+SocksPort 9058
+SocksPort 9059
+
+HiddenServiceDir /tmp/tsunami_service
+HiddenServicePort 6881 127.0.0.1:6881
