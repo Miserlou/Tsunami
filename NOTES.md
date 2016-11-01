@@ -3,7 +3,7 @@ Notes
 
 Plan of attack:
 
-* ~Proxy existing Torrent connections~
+* ~~~Proxy existing Torrent connections~~~
     https://github.com/krisives/proxysocket/pull/6
     https://github.com/mafintosh/peer-wire-swarm/issues/20
     BASED HUUMANOID
@@ -43,7 +43,7 @@ Plan of attack:
         //var tr = new tracker.Client(new Buffer(opts.id), port, torrent);
         var tr = new tracker.Client(requiredOpts);
 
-* Run Hidden Service
+* ~~~Run Hidden Service~~~
 
     // https://gist.github.com/timoxley/1689041
     var isPortTaken = function(port, fn) {
@@ -77,6 +77,10 @@ Plan of attack:
     https://shapeshed.com/writing-cross-platform-node/
 
 * Announce to Tracker Using Hidden Service Address
+
+    FUCKKKKK
+    https://github.com/feross/bittorrent-tracker/issues/181
+
     - Can an announce be a URL?
         - Does it need to?
             No, can be DNS name (.onion)
