@@ -41,8 +41,41 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({ width: 1024, height: 600, resizable: false });
 
   GlobalState.setWindow(mainWindow);
-  TorrentManager.bindIpc();
-  TorrentManager.restore();
+
+  /*
+    Don't establish torrents until Tor is fully connected.
+  */
+  var tcpPortUsed = require('tcp-port-used');
+  const exec = require('child_process').exec;
+
+  tcpPortUsed.check(9050, '127.0.0.1')
+  .then(function(inUse) {
+      console.log('Port 9050 usage: ' + inUse);
+
+      if(!inUse){
+        console.log("Starting Tor..");
+        tor_process = exec('./tor/tor');
+
+        tcpPortUsed.waitUntilUsed(9050)
+        .then(function() {
+            console.log('Port 9050 is now in use.');
+              // Tor connected, establish Torrents.
+              TorrentManager.bindIpc();
+              TorrentManager.restore();
+
+        }, function(err) {
+            console.log('Error:', err.message);
+        });
+      } else{
+        console.log("Proxy already running, starting Torrents.")
+        // Tor connected, establish Torrents.
+        TorrentManager.bindIpc();
+        TorrentManager.restore();
+      }
+
+  }, function(err) {
+      console.error('Error on check:', err.message);
+  });
 
   app.emit('preopen-url');
   app.emit('preopen-file');

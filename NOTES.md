@@ -11,6 +11,38 @@ Plan of attack:
 * Proxy HTTP announce (Onionify DNS?)
     https://github.com/feross/bittorrent-tracker/issues/178
 
+    var requiredOpts = {
+          infoHash: new Buffer(torrent.infohash), // hex string or Buffer
+          peerId: new Buffer(opts.id), // hex string or Buffer
+          announce: [torrent.announce], // list of tracker server urls
+          port: port, // torrent client port, (in browser, optional)
+          proxyOpts: {
+              // Socks proxy options (used to proxy requests in node)
+              socksProxy: {
+                  // Configuration from socks module (https://github.com/JoshGlazebrook/socks)
+                  proxy: {
+                      // IP Address of Proxy (Required)
+                      ipaddress: "127.0.0.1",
+                      // TCP Port of Proxy (Required)
+                      port: 9050,
+                      // Proxy Type [4, 5] (Required)
+                      // Note: 4 works for both 4 and 4a.
+                      // Type 4 does not support UDP association relay
+                      type: 5
+                  },
+
+                  // Amount of time to wait for a connection to be established. (Optional)
+                  // - defaults to 10000ms (10 seconds)
+                  timeout: 10000
+              }
+          }
+        }
+
+        //var client = new Client(requiredOpts)
+
+        //var tr = new tracker.Client(new Buffer(opts.id), port, torrent);
+        var tr = new tracker.Client(requiredOpts);
+
 * Run Hidden Service
 
     // https://gist.github.com/timoxley/1689041
@@ -75,6 +107,7 @@ Plan of attack:
     May not actually need this for v1
 * New Skin in App, because we're fabulous
 * Package
+    - NPM HELL FUCK SHIT
     - OSX, Linux, Windows
         https://github.com/electron-userland/electron-packager
         https://github.com/electron-userland/electron-builder
@@ -85,3 +118,5 @@ SO MANY GOD DAMN PROXY LIBRARIES THAT ALL SUCK
 COOL FRENCH GUY WORKING ON SIMILAR PROBLEM?
 PEER SWITCHING FUCK
 MAGIC PACKET?
+
+Dat BEP tho https://github.com/feross/webtorrent/pull/881#pullrequestreview-5369250
