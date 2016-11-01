@@ -45,6 +45,10 @@ app.on('ready', function() {
   /*
     Don't establish torrents until Tor is fully connected.
   */
+  var file = require("fs");
+  var path = require("path");
+  var os = require("os");
+  var tmp = require('tmp');
   var tcpPortUsed = require('tcp-port-used');
   const exec = require('child_process').exec;
 
@@ -54,7 +58,23 @@ app.on('ready', function() {
 
       if(!inUse){
         console.log("Starting Tor..");
-        tor_process = exec('./tor/tor');
+
+        // This should be x-platform
+        var tmp_dir = tmp.dirSync().name;
+        console.log(tmp_dir);
+        var tmp_file = path.join(tmp_dir, '.tsunami_torrc');
+
+        var torrc_contents = "SafeLogging 0 \n\
+Log info stdout \n\
+SocksPort 9050 \n\
+"
+        torrc_contents = torrc_contents + "HiddenServiceDir " + tmp_dir
+        torrc_contents = torrc_contents + "\nHiddenServicePort 6881 127.0.0.1:6881"
+        var contents = file.writeFileSync(tmp_file, torrc_contents);
+
+        console.log(tmp_file);
+
+        tor_process = exec('./tor/tor -f ' + tmp_file);
 
         tcpPortUsed.waitUntilUsed(9050)
         .then(function() {
