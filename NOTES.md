@@ -80,6 +80,10 @@ Plan of attack:
 
     FUCKKKKK
     https://github.com/feross/bittorrent-tracker/issues/181
+    nm we good fam
+        actually we're not good, we can't use getAnnounceOpts without updating to 7.3.0
+            > https://github.com/feross/bittorrent-tracker/issues/3
+            > Fixed by #107 and released as 7.3.0.
 
     - Can an announce be a URL?
         - Does it need to?
@@ -124,3 +128,8 @@ PEER SWITCHING FUCK
 MAGIC PACKET?
 
 Dat BEP tho https://github.com/feross/webtorrent/pull/881#pullrequestreview-5369250
+
+Compromising Tor Anonymity
+Exploiting P2P Information Leakage
+https://arxiv.org/pdf/1004.1461.pdf
+    - Pretty much all dumb shit client implementations, UDP/DHT, including real IP, etc.
