@@ -133,3 +133,6 @@ Compromising Tor Anonymity
 Exploiting P2P Information Leakage
 https://arxiv.org/pdf/1004.1461.pdf
     - Pretty much all dumb shit client implementations, UDP/DHT, including real IP, etc.
+
+SOME SHIT WITH BABELRC GOD DAMMIT
+ALL FOR SOME SHIT DEPENDANCY
