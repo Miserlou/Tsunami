@@ -19,9 +19,12 @@ export default class PageAboutContainer extends React.Component {
             <div className="brand">
               <img src="../icon/res/mipmap-hdpi/ic_launcher.png" />
             </div>
-            <p>nuTorrent(νTorrent) is a pure javascript BitTorrent client based on Electron, React, torrent-stream.</p>
-            <hr />
-            <p>MIT © LeeChSien <button className="btn btn-default btn-sm" onClick={this.openUrl.bind(this, 'https://github.com/LeeChSien/nuTorrent')}>Github Repo</button></p>
+            <p>
+              <b>Tsunami</b> is an experimental anonymous BitTorrent client built on Tor, torrent-stream and Electron.
+            </p>
+            <p>
+              Learn more at: <i>https://github.com/Miserlou/Tsunami</i>
+            </p>
           </div>
         </div>
       </div>

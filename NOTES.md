@@ -84,6 +84,8 @@ Plan of attack:
         actually we're not good, we can't use getAnnounceOpts without updating to 7.3.0
             > https://github.com/feross/bittorrent-tracker/issues/3
             > Fixed by #107 and released as 7.3.0.
+                > DONE
+                    > with custom dep
 
     - Can an announce be a URL?
         - Does it need to?

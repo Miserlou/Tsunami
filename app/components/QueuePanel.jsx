@@ -245,7 +245,7 @@ export default class QueuePanel extends React.Component {
         </nav>
 
         <div className={(this.state.clientsLength == 0) ? 'hide' : ''}>
-          <BootstrapTable data={this.clients} selectRow={selectRowProp}>
+          <BootstrapTable data={this.clients} selectRow={selectRowProp} striped={true} hover={true} bordered={false}>
             <TableHeaderColumn dataField="controlHash" isKey={true} hidden={true}></TableHeaderColumn>
 
             <TableHeaderColumn dataField="name" width="200px" dataSort={true} dataFormat={this.nameFormatter}>Name</TableHeaderColumn>
@@ -256,7 +256,7 @@ export default class QueuePanel extends React.Component {
           </BootstrapTable>
         </div>
 
-        { (this.state.clientsLength == 0) ? <h4 className="text-center no-task"> No task.</h4> : null }
+        { (this.state.clientsLength == 0) ? <h4 className="text-center no-task"> Nothing!</h4> : null }
 
         <Modal show={this.state.showMagnetModal} onHide={this.closeMagnetModal.bind(this)}>
           <Modal.Header closeButton>
