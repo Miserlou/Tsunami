@@ -1,3 +1,10 @@
+var fs = require('fs');
+var file = require("fs");
+var path = require("path");
+var os = require("os");
+var tmp = require('tmp');
+var tcpPortUsed = require('tcp-port-used');
+
 var app = require('app')
 var BrowserWindow = require('browser-window')
 var Menu = require('menu')
@@ -10,8 +17,40 @@ require('electron-debug')()
 require('crash-reporter').start()
 
 var mainWindow = null
+var tmp_dir = null
+var hostname = null
+var tor_process = null
 
 app.on('window-all-closed', function() {
+
+  // Clean up our mess.
+  if(tmp_dir != null){
+
+    // http://stackoverflow.com/a/32197381
+    var deleteFolderRecursive = function(fpath) {
+      if( fs.existsSync(fpath) ) {
+        fs.readdirSync(fpath).forEach(function(file, index){
+          var curPath = path.join(fpath, file);
+          if(fs.lstatSync(curPath).isDirectory()) { // recurse
+            deleteFolderRecursive(curPath);
+          } else { // delete file
+            fs.unlinkSync(curPath);
+          }
+        });
+        fs.rmdirSync(fpath);
+      }
+    };
+
+    console.log("Going to delete " + tmp_dir);
+    deleteFolderRecursive(tmp_dir);
+  }
+
+  // Kill tor, if able
+  if(tor_process != null){
+    console.log("Killing Tor..");
+    process.kill(tor_process);
+  }
+
   TorrentManager.quit().then(function() {
     app.quit();
   });
@@ -45,11 +84,6 @@ app.on('ready', function() {
   /*
     Don't establish torrents until Tor is fully connected.
   */
-  var file = require("fs");
-  var path = require("path");
-  var os = require("os");
-  var tmp = require('tmp');
-  var tcpPortUsed = require('tcp-port-used');
   const exec = require('child_process').exec;
 
   tcpPortUsed.check(9050, '127.0.0.1')
@@ -60,7 +94,7 @@ app.on('ready', function() {
         console.log("Starting Tor..");
 
         // This should be x-platform
-        var tmp_dir = tmp.dirSync().name;
+        tmp_dir = tmp.dirSync().name;
         console.log(tmp_dir);
         var tmp_file = path.join(tmp_dir, '.tsunami_torrc');
 
@@ -72,22 +106,34 @@ SocksPort 9050 \n\
         torrc_contents = torrc_contents + "\nHiddenServicePort 6881 127.0.0.1:6881"
         var contents = file.writeFileSync(tmp_file, torrc_contents);
 
-        console.log(tmp_file);
-
         tor_process = exec('./tor/tor -f ' + tmp_file);
+        tor_process = tor_process.pid;
+
+        console.log(path.join(tmp_dir, 'hostname'));
+        console.log("is the hostnamepath");
+
+        console.log("tor_process is ");
+        console.log(tor_process);
 
         tcpPortUsed.waitUntilUsed(9050)
         .then(function() {
             console.log('Port 9050 is now in use.');
-              // Tor connected, establish Torrents.
-              TorrentManager.bindIpc();
-              TorrentManager.restore();
+
+            hostname = file.readFileSync(path.join(tmp_dir, 'hostname'));
+            console.log(hostname);
+            console.log("is the hostname");
+
+            // Tor connected, establish Torrents.
+            TorrentManager.bindIpc();
+            TorrentManager.restore();
 
         }, function(err) {
             console.log('Error:', err.message);
         });
       } else{
         console.log("Proxy already running, starting Torrents.")
+        // XXX: No way to get hostname?
+
         // Tor connected, establish Torrents.
         TorrentManager.bindIpc();
         TorrentManager.restore();
@@ -213,29 +259,6 @@ SocksPort 9050 \n\
         label: 'Bring All to Front',
         selector: 'arrangeInFront:'
       }]
-    }, {
-      label: 'Help',
-      submenu: [{
-        label: 'Learn More',
-        click: function() {
-          require('shell').openExternal('http://electron.atom.io')
-        }
-      }, {
-        label: 'Documentation',
-        click: function() {
-          require('shell').openExternal('https://github.com/atom/electron/tree/master/docs#readme')
-        }
-      }, {
-        label: 'Community Discussions',
-        click: function() {
-          require('shell').openExternal('https://discuss.atom.io/c/electron')
-        }
-      }, {
-        label: 'Search Issues',
-        click: function() {
-          require('shell').openExternal('https://github.com/atom/electron/issues')
-        }
-      }]
     }]
 
     menu = Menu.buildFromTemplate(template)
@@ -272,29 +295,6 @@ SocksPort 9050 \n\
         accelerator: 'Alt+Ctrl+I',
         click: function() {
           mainWindow.toggleDevTools()
-        }
-      }]
-    }, {
-      label: 'Help',
-      submenu: [{
-        label: 'Learn More',
-        click: function() {
-          require('shell').openExternal('http://electron.atom.io')
-        }
-      }, {
-        label: 'Documentation',
-        click: function() {
-          require('shell').openExternal('https://github.com/atom/electron/tree/master/docs#readme')
-        }
-      }, {
-        label: 'Community Discussions',
-        click: function() {
-          require('shell').openExternal('https://discuss.atom.io/c/electron')
-        }
-      }, {
-        label: 'Search Issues',
-        click: function() {
-          require('shell').openExternal('https://github.com/atom/electron/issues')
         }
       }]
     }]
