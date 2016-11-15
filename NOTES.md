@@ -138,3 +138,18 @@ https://arxiv.org/pdf/1004.1461.pdf
 
 SOME SHIT WITH BABELRC GOD DAMMIT
 ALL FOR SOME SHIT DEPENDANCY
+
+Hidden Trackers
+    http://c4vwfltbxbd65iyd.onion:18989/
+    http://www.g4npsfrb6yz2tgin.onion:17979/
+    http://trackeryknvofs3m.onion/ <-- "DHT tracker" - safe?
+    http://rutorc6mqdinc4cz.onion/ <-- Russian :[
+    http://xodv6rg4bvpfpcs7.onion:6969/announce
+    http://z6gw6skubmo2pj43.onion:8080/announce <-- The Hidden Tracker, Long Dead
+
+"Good" trackers?
+    0: http://tracker.opentrackr.org:1337/announce
+    1: http://mgtracker.org:2710/announce
+    2: http://p4p.arenabg.ch:1337/announce
+    3: http://explodie.org:6969/announce
+    4: http://trackeryknvofs3m.onion/announce
