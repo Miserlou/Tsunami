@@ -1,6 +1,6 @@
 <img src="http://i.imgur.com/BJMKyJL.png" width="400px">
 
-Tsunami 🌊
+Tsunami 🌊 [![Build Status](https://travis-ci.org/Miserlou/Tsunami.svg)](https://travis-ci.org/Miserlou/Tsunami)
 ==============
 
 **Tsunami** is an experimental BitTorrent client with magical anonymity powers.
