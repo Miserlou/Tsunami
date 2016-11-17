@@ -1,0 +1,8 @@
+language: node_js 
+python:
+  - "4"
+install:
+  - "npm i -g electron-prebuilt"
+before_script:
+  - export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start
+script: electron-mocha ./test
