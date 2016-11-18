@@ -77,7 +77,7 @@ app.on('open-file', function(event, path) {
 })
 
 app.on('ready', function() {
-  mainWindow = new BrowserWindow({ width: 1024, height: 600, resizable: false });
+  mainWindow = new BrowserWindow({ width: 1024, height: 600, resizable: true });
 
   GlobalState.setWindow(mainWindow);
 

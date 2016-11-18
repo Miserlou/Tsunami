@@ -8,6 +8,7 @@ body {
   height: 100%;
   overflow: hidden;
   background-color: #f8f8f8;
+  font-size: 15px;
 }
 
 .control-label {
@@ -20,7 +21,20 @@ body {
 
 .sidebar {
   padding: 10px 10px;
-  background-color: #f8f8f8;
+     background: -moz-linear-gradient(45deg, rgba(219,112,255,1) 0%, rgba(112,248,255,1) 100%); /* ff3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(219,112,255,1)), color-stop(100%, rgba(112,248,255,1))); /* safari4+,chrome */
+    background: -webkit-linear-gradient(45deg, rgba(219,112,255,1) 0%, rgba(112,248,255,1) 100%); /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(45deg, rgba(219,112,255,1) 0%, rgba(112,248,255,1) 100%); /* opera 11.10+ */
+    background: -ms-linear-gradient(45deg, rgba(219,112,255,1) 0%, rgba(112,248,255,1) 100%); /* ie10+ */
+    background: linear-gradient(45deg, rgba(219,112,255,1) 0%, rgba(112,248,255,1) 100%); /* w3c */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#70F8FF', endColorstr='#DB70FF',GradientType=1 ); /* ie6-9 */
+}
+
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+  z-index: 2;
+  color: #fff;
+  background-color: #9246BE;
+  border-color: #9246BE;
 }
 
 .page {
