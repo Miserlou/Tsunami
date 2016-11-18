@@ -41,8 +41,6 @@ npm run start-hot
 
 ```
 
-To run the simple proxy: https://github.com/brozeph/simple-socks.git
-
 License
 ------------
 
