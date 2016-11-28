@@ -46,12 +46,24 @@ module.exports = function(torrent, opts) {
 
 		if (!torrent.announce || !torrent.announce.length) return;
 
-		var tr = new tracker.Client(new Buffer(opts.id), port, torrent);
+		//var tr = new tracker.Client(new Buffer(opts.id), port, torrent);
+		// console.log(torrent);
+		// console.log(torrent.announce);
+
+		var requiredOpts = {
+		  infoHash: torrent.infoHash, // hex string or Buffer
+		  peerId: new Buffer('01234567890123456789'), // hex string or Buffer
+		  announce: torrent.announce, // list of tracker server urls
+		  port: port // torrent client port, (in browser, optional)
+		}
+		var tr = new tracker(requiredOpts)
 
 		tr.on('peer', onpeer);
 		tr.on('error', function() { /* noop */ });
 
+		console.log("Starting..");
 		tr.start();
+		console.log("Started..");
 		return tr;
 	};
 
