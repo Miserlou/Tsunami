@@ -40,6 +40,9 @@ export default class QueuePanel extends React.Component {
         this.props.clients = clients;
       }
 
+      console.log("CLIENTS!");
+      console.log(clients);
+
       this.clients.setData(this.props.clients);
       this.setState({clientsLength: this.props.clients.length});
     });
@@ -209,6 +212,16 @@ export default class QueuePanel extends React.Component {
     );
   }
 
+  peersFormatter(cell, row) {
+    let peers = this.dataRateStringFormatter(cell);
+
+    return (
+      <span className="label label-primary">
+        {peers}
+      </span>
+    );
+  }
+
   render() {
     let selectRowProp = {
       mode: "checkbox",
@@ -249,10 +262,12 @@ export default class QueuePanel extends React.Component {
             <TableHeaderColumn dataField="controlHash" isKey={true} hidden={true}></TableHeaderColumn>
 
             <TableHeaderColumn dataField="name" width="200px" dataSort={true} dataFormat={this.nameFormatter}>Name</TableHeaderColumn>
-            <TableHeaderColumn dataField="progress" dataSort={true} dataFormat={this.progressFormatter}>Progress</TableHeaderColumn>
+            <TableHeaderColumn dataField="progress" width="100px" dataSort={true} dataFormat={this.progressFormatter}>Progress</TableHeaderColumn>
             <TableHeaderColumn dataField="size" width="100px" dataSort={true} dataFormat={this.sizeFormatter.bind(this)}>Size</TableHeaderColumn>
             <TableHeaderColumn dataField="downlink" width="100px" dataSort={true} dataFormat={this.downlinkFormatter.bind(this)}>Downlink</TableHeaderColumn>
             <TableHeaderColumn dataField="uplink" width="100px" dataSort={true} dataFormat={this.uplinkFormatter.bind(this)}>Uplink</TableHeaderColumn>
+            <TableHeaderColumn dataField="peers" width="100px" dataSort={true} dataFormat={this.peersFormatter.bind(this)}>Peers</TableHeaderColumn>
+
           </BootstrapTable>
         </div>
 
