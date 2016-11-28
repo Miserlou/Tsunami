@@ -8,7 +8,7 @@ Plan of attack:
     https://github.com/mafintosh/peer-wire-swarm/issues/20
     BASED HUUMANOID
 
-* Proxy HTTP announce (Onionify DNS?)
+* ~~~Proxy HTTP announce~~~ (Onionify DNS?)
     https://github.com/feross/bittorrent-tracker/issues/178
 
     var requiredOpts = {
@@ -112,7 +112,6 @@ Plan of attack:
     - Windows 'expert' bundle
     - Linux? https://www.torproject.org/download/download-unix.html.en
         May be just make them use their package manager..
-
 * Bundle Control Port
     May not actually need this for v1
 * New Skin in App, because we're fabulous
@@ -122,6 +121,8 @@ Plan of attack:
         https://github.com/electron-userland/electron-packager
         https://github.com/electron-userland/electron-builder
 * Slack and all that
+* Website
+    - MANIFESTOOOooooo
 
 
 SO MANY GOD DAMN PROXY LIBRARIES THAT ALL SUCK
