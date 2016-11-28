@@ -40,17 +40,19 @@ var Manager = function() {
   // Private
 
   function addClient(magnet, path) {
+    console.log("Adding client..");
     var controlHash  = Md5(magnet + (new Date().getTime())),
         setting = {
           verify: true,
           path: path ? path : null,
           tmp: App.getPath('userCache'),
-          //connections: 30
-          connections: 1 
+          connections: 30
+          //connections: 1
         },
         client = new Client();
 
     client.setup(controlHash, magnet, setting);
+    client.hiddenService = this.hiddenService;
     clients.push(client);
     LocalStorage.saveClients(getClients());
   }
@@ -65,10 +67,11 @@ var Manager = function() {
     }
   }
 
-  function restoreClients() {
+  function restoreClients(hiddenService) {
     LocalStorage.getClients().then(function(existClients) {
       existClients.forEach(function(clientAttributes) {
         var client = new Client();
+        client.hiddenService = hiddenService;
         client.restore(clientAttributes);
         clients.push(client);
       });
@@ -87,8 +90,8 @@ var Manager = function() {
 
   // Public
 
-  function restore() {
-    restoreClients()
+  function restore(hiddenService) {
+    restoreClients(hiddenService)
   }
 
   function quit() {

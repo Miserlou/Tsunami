@@ -31,6 +31,7 @@ var Client = function() {
   // Public
   this.controlHash = '';
   this.magnet = '';
+  this.hiddenService = '';
 };
 
 Client.prototype = {
@@ -45,6 +46,7 @@ Client.prototype = {
 
     clonedSetting = JSON.parse(JSON.stringify(this._setting));
     clonedSetting['dht'] = false;
+    clonedSetting['hiddenService'] = this.hiddenService;
 
     self._engine = TorrentStream(this.magnet, clonedSetting);
     self._engine.on('ready', function() {

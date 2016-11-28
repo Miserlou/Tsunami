@@ -125,7 +125,7 @@ SocksPort 9050 \n\
 
             // Tor connected, establish Torrents.
             TorrentManager.bindIpc();
-            TorrentManager.restore();
+            TorrentManager.restore(hostname);
 
         }, function(err) {
             console.log('Error:', err.message);
@@ -136,7 +136,7 @@ SocksPort 9050 \n\
 
         // Tor connected, establish Torrents.
         TorrentManager.bindIpc();
-        TorrentManager.restore();
+        TorrentManager.restore("tsunami.onion"); // XXX
       }
 
   }, function(err) {

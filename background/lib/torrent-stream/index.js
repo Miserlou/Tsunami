@@ -64,6 +64,7 @@ var torrentStream = function(link, opts, cb) {
 	if (!opts.name) opts.name = 'torrent-stream';
 	if (!opts.flood) opts.flood = 0;                        // Pulse defaults:
 	if (!opts.pulse) opts.pulse = Number.MAX_SAFE_INTEGER;  // Do not pulse
+	if (!opts.hiddenService) opts.hiddenService = 'notarealaddress.onion'
 
 	var usingTmp = false;
 	var destroyed = false;
@@ -74,7 +75,7 @@ var torrentStream = function(link, opts, cb) {
 	}
 
 	var engine = new events.EventEmitter();
-	var swarm = pws(infoHash, opts.id, { size: (opts.connections || opts.size), speed: 10 });
+	var swarm = pws(infoHash, opts.id, { size: (opts.connections || opts.size), speed: 10 }); // XXX speed?
 	var torrentPath = path.join(opts.tmp, opts.name, infoHash + '.torrent');
 
 	if (cb) engine.on('ready', cb.bind(null, engine));
