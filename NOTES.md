@@ -87,6 +87,10 @@ Plan of attack:
                 > DONE
                     > with custom dep
 
+    - Handy
+        brew install transmission
+        transmission-show Azureus5.7.3.0.jar.tor.torrent
+
     - Can an announce be a URL?
         - Does it need to?
             No, can be DNS name (.onion)
