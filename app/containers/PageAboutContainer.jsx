@@ -16,9 +16,6 @@ export default class PageAboutContainer extends React.Component {
             <h3 className="panel-title">About</h3>
           </div>
           <div className="panel-body">
-            <div className="brand">
-              <img src="../icon/res/mipmap-hdpi/ic_launcher.png" />
-            </div>
             <p>
               <b>Tsunami</b> is an experimental anonymous BitTorrent client built on Tor, torrent-stream and Electron.
             </p>

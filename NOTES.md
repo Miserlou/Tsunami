@@ -76,7 +76,7 @@ Plan of attack:
     shell.exec()
     https://shapeshed.com/writing-cross-platform-node/
 
-* Announce to Tracker Using Hidden Service Address
+* ~~~Announce to Tracker Using Hidden Service Address~~~ WORKS
 
     FUCKKKKK
     https://github.com/feross/bittorrent-tracker/issues/181
@@ -86,10 +86,6 @@ Plan of attack:
             > Fixed by #107 and released as 7.3.0.
                 > DONE
                     > with custom dep
-
-    - Handy
-        brew install transmission
-        transmission-show Azureus5.7.3.0.jar.tor.torrent
 
     - Can an announce be a URL?
         - Does it need to?
@@ -109,6 +105,8 @@ Plan of attack:
     - PEX
         - Should work? http://www.bittorrent.org/beps/bep_0011.html
 
+* Prevent UDP/WS Trackers, Inject Onion Friendly Trackers
+
 * Properly Handle Hidden Service Connections
     Once we read hostname file and set as remote address, this may JustWork.
 * Bundle Tor
@@ -119,6 +117,9 @@ Plan of attack:
 * Bundle Control Port
     May not actually need this for v1
 * New Skin in App, because we're fabulous
+    - Fix Initialization shit
+    - Move React to Vue? ¯\_(ツ)_/¯ ¯\_(ツ)_/¯ ¯\_(ツ)_/¯
+    - Other Bugs
 * Package
     - NPM HELL FUCK SHIT
         - We have our own ticket..
@@ -160,3 +161,7 @@ Hidden Trackers
     2: http://p4p.arenabg.ch:1337/announce
     3: http://explodie.org:6969/announce
     4: http://trackeryknvofs3m.onion/announce
+
+    - Handy
+        brew install transmission
+        transmission-show Azureus5.7.3.0.jar.tor.torrent
