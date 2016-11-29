@@ -117,6 +117,8 @@ Plan of attack:
 * New Skin in App, because we're fabulous
 * Package
     - NPM HELL FUCK SHIT
+        - We have our own ticket..
+            - https://github.com/npm/npm/issues/15052
     - OSX, Linux, Windows
         https://github.com/electron-userland/electron-packager
         https://github.com/electron-userland/electron-builder

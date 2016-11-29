@@ -47,46 +47,46 @@ module.exports = function(torrent, opts) {
 		if (!torrent.announce || !torrent.announce.length) return;
 
 		//var tr = new tracker.Client(new Buffer(opts.id), port, torrent);
-		// console.log(torrent);
-		// console.log(torrent.announce);
-		// console.log(opts);
-		// console.log(opts.hiddenService);
+		console.log(torrent);
+		console.log(torrent.announce);
+		console.log(opts);
+		console.log(opts.hiddenService);
 
 		var requiredOpts = {
 			infoHash: torrent.infoHash, // hex string or Buffer
-			peerId: opts.id, // XXX TODO REAL PEERID
+			peerId: new Buffer(opts.id),
 			announce: torrent.announce, // list of tracker server urls
 			port: port, // torrent client port, (in browser, optional)
-			// getAnnounceOpts: function () {
-			// 	return {
-			// 		ip: opts.hiddenService // custom parameters supported
-			// 	}
-			// },
-			// proxyOpts: {
-			//       // Socks proxy options (used to proxy requests in node)
-			//       socksProxy: {
-			//           // Configuration from socks module (https://github.com/JoshGlazebrook/socks)
-			//           proxy: {
-			//               // IP Address of Proxy (Required)
-			//               ipaddress: "127.0.0.1",
-			//               // TCP Port of Proxy (Required)
-			//               port: 9050,
-			//               // Proxy Type [4, 5] (Required)
-			//               // Note: 4 works for both 4 and 4a.
-			//               // Type 4 does not support UDP association relay
-			//               type: 5
-			//               // SOCKS 5 Specific:
-			//               // Authentication used for SOCKS 5 (when it's required) (Optional)
-			//               // authentication: {
-			//               //     username: "Josh",
-			//               //     password: "somepassword"
-			//               // }
-			//           },
-			//           // Amount of time to wait for a connection to be established. (Optional)
-			//           // - defaults to 10000ms (10 seconds)
-			//           timeout: 10000
-			//       }
-			// }
+			getAnnounceOpts: function () {
+				return {
+					ip: opts.hiddenService // custom parameters supported
+				}
+			},
+			proxyOpts: {
+			      // Socks proxy options (used to proxy requests in node)
+			      socksProxy: {
+			          // Configuration from socks module (https://github.com/JoshGlazebrook/socks)
+			          proxy: {
+			              // IP Address of Proxy (Required)
+			              ipaddress: "127.0.0.1",
+			              // TCP Port of Proxy (Required)
+			              port: 9050,
+			              // Proxy Type [4, 5] (Required)
+			              // Note: 4 works for both 4 and 4a.
+			              // Type 4 does not support UDP association relay
+			              type: 5
+			              // SOCKS 5 Specific:
+			              // Authentication used for SOCKS 5 (when it's required) (Optional)
+			              // authentication: {
+			              //     username: "Josh",
+			              //     password: "somepassword"
+			              // }
+			          },
+			          // Amount of time to wait for a connection to be established. (Optional)
+			          // - defaults to 10000ms (10 seconds)
+			          timeout: 10000
+			      }
+			}
 		}
 
 		var tr = new tracker(requiredOpts)
